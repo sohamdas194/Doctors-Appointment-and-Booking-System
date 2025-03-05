@@ -2,8 +2,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: doctorappointmentsystem845@gmail.com
-    password: xcas owms voah qayj
+    username: ****
+    password: ****
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
 
@@ -15,9 +15,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/dabs?createDatabaseIfNotExist=true
-    username: root
-    password: Lalitha@14
+    url: jdbc:mysql://127.0.0.1:3306/dabs?createDatabaseIfNotExist=tru
+    username: ****
+    password: ****
 
 server:
   port: 8083
