@@ -1,0 +1,133 @@
+
+<div class="container w-100 mt-3 bg-light rounded rounded mat-elevation-z15">
+    <div class="row mb-3">
+        <div class="col-md-6 text-center">
+            <h2 class="py-2 px-1 ">
+                <br>
+                Welcome patient {{userEmail}},
+            </h2>
+        </div>
+        <div class="col-md-6">
+            <div class="container d-grid gap-3 p-3 m-0 border-0">
+                <div class="py-2 px- row">
+                    <button class="btn btn-outline-primary" routerLink="/patient/appointment">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="w-100 mt-3 p-3 rounded mat-elevation-z24">
+        <div class="float-container">
+            <div class="float-child">
+                <div class="col-4">
+                    <h3 class="btn btn-primary"(click)="resetRange()">
+                        My Upcoming Appointments
+                    </h3>
+                </div>
+                <div>
+                    <div style="position: absolute;top: 37%;left: 28%;">
+                        <input  class=" btn-block rounded " matInput (keyup)="applyFilter($event)"
+                            placeholder="search with name" #input>
+                    </div>
+                    <div style="position: absolute;top: 33%;left: 47%;">
+                        <label><b>From: </b> </label>
+                        <input class="form-control m-1" type="date" id="fromDate" [(ngModel)]="fromDate">
+                    </div>
+                    <div style="position: absolute;top: 33%;left: 65%;">
+                        <label><b>To: </b></label>
+                        <input class="form-control m-1" type="date" id="toDate" [(ngModel)]="toDate" [min]="fromDate" >
+                        <div style="position: absolute;top: 33%;left: 140%;">
+                            <button class="btn btn-primary" (click)="getAppointmentBetween()">Search</button>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col border m-2 rounded">
+                <table mat-table [dataSource]="dataSource" class="table table-striped">
+                    <ng-container matColumnDef="Appointment Id">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Appointment Id</b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center">
+                            {{element.appointmentId}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Doctor Details">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Doctor Details</b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center" title="Specialization: {{ element.docSpecialization }}
+Experience: {{element.docExp}} Years
+Contact Number: {{element.docContactNo}}"> {{ element.docName }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Date Of Appointment">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Date Of Appointment</b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center">
+                            {{element.appointmentDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Appointment Slot">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Appointment Time </b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center">
+                            {{element.appointmentTime}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="Patient Details">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Patient Details</b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center"> {{
+                            element.patientName + " (" + element.patientGender.charAt(0).toUpperCase() +" "+
+                            element.patientAge + ")" }} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="Patient Comments">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Patient Comments</b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center">
+                            {{element.patientComments}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="Current Status">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center">
+                            <h4><b>Current Status</b></h4>
+                        </th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center">
+                            {{element.appointmentStatus}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Options">
+                        <th class="table-primary" mat-header-cell *matHeaderCellDef style="text-align:center"></th>
+                        <td class="data" mat-cell *matCellDef="let element" style="text-align:center">
+                            <a class="btn btn-primary" (click)="cancelAppointment(element.appointmentId)"
+                                type="submit">Cancel</a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="15">No appointments matching the filter " {{input.value}} "</td>
+                    </tr>
+
+                </table>
+                <mat-paginator #paginator [pageSize]="3" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>

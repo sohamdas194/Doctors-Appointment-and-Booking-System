@@ -1,0 +1,26 @@
+
+ <h2 style="margin-left:30%">Add Status</h2>
+
+  <div mat-dialog-content>
+    <div class="col sm">
+      <label for="status" class="status1"> Status</label>
+      <select class="status" id="status" [(ngModel)]="data.currentStatus">
+        <option value="" disabled selected></option>
+        <option *ngFor="let group of Status" [value]="group">{{ group }}</option>
+      </select>
+    </div>
+
+    <br>
+    <label for="status" class="status1">Comments </label>
+    <br>
+    <textarea class="text" matInput [(ngModel)]="data.doctorComment"></textarea>
+  </div>
+
+
+
+  <div mat-dialog-actions>
+
+  <button class="cancel" mat-button (click)="onCancel()">Cancel</button>
+  <button class="submit" mat-button (click)="updateDoctorComment()" cdkFocusInitial>Submit</button>
+
+ </div>

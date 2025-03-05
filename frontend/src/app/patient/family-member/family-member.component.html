@@ -1,0 +1,355 @@
+
+<div class="container w-100 mt-3 p-3 rounded mat-elevation-z24">
+    <br>
+    <br>
+    <h2> Family Members Details</h2>
+    <br>
+    <a style="position: absolute;top: 20%;left: 78%;" type="submit" class="btn btn-primary"
+        (click)="openAddFamilyMember()">Add Family Member</a>
+    <div class="row">
+        <div class="col-15">
+            <table class="table table-striped" >
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Height (cm)</th>
+                        <th scope="col">Weight (kg)</th>
+                        <th scope="col">Blood Group</th>
+                        <th scope="col">Relationship</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Health History</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let families of family; index as i">
+                        <td>{{ families.firstName }}</td>
+                        <td>{{families.lastName }}</td>
+                        <td>{{ families.dob }}</td>
+                        <td>{{families.gender }}</td>
+                        <td>{{ families.height }}</td>
+                        <td>{{ families.weight }}</td>
+                        <td>{{ families.bloodGroup }}</td>
+                        <td>{{families.relationship }}</td>
+                        <td>{{ families.contactNo }}</td>
+                        <td>{{ families.healthHistory }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary"
+                                (click)="editFamilymodal(families.memberId)"><i
+                                    class="glyphicon glyphicon-edit"></i>Edit</button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="familyModal">
+    <div id="addFamilymodal">
+        <div class="form-container">
+            <form [formGroup]="familyRegForm" (ngSubmit)="onSubmit()">
+                <div class="box">
+                    <div class="text">
+                        <h3 align="center">Add Family Member</h3>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" id="firstName" class="form-control" name="firstName"
+                            formControlName="firstname">
+                        <div *ngIf="familyRegForm.get('firstname')?.touched && hasError('firstname','required')"
+                            class="text-danger">*First name is required.</div>
+                        <div *ngIf="familyRegForm.get('firstname')?.touched && hasError('firstname','minlength')"
+                            class="text-danger">*First Name minimum 4 characters required.</div>
+                    </div>
+                    <br>
+
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" id="lastName" class="form-control" name="lastName"
+                            formControlName="lastname">
+                        <div *ngIf="familyRegForm.get('lastname')?.touched && hasError('lastname','required')"
+                            class="text-danger">*Last name is required.</div>
+                        <div *ngIf="familyRegForm.get('lastname')?.touched && hasError('lastname','minlength')"
+                            class="text-danger">*Last name minimum 1 characters required.</div>
+                    </div>
+                </div>
+
+                <br>
+                <!--**********************************************-->
+
+                <!--**********************************************-->
+                <div class="row mb-3">
+                    <div class="col sm">
+                        <label for="gender">Gender </label>
+                        <select formControlName="gender" class="dropdown" id="gender">
+                            <option value="" disabled selected></option>
+                            <option *ngFor="let group of genders" [value]="group">{{ group }}</option>
+                        </select>
+                        <div *ngIf="hasError('gender', 'required')" class="text-danger">*Gender is required.</div>
+                    </div>
+
+                    <div class="col sm">
+                        <label for="bloodGroup">Blood Group </label>
+                        <select formControlName="bloodGroup" class="dropdown" id="bloodGroup">
+                            <option value="" disabled selected></option>
+                            <option *ngFor="let group of bloodGroups" [value]="group">{{ group }}</option>
+                        </select>
+                        <div *ngIf="hasError('bloodGroup', 'required')" class="text-danger">*Blood group is required.
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <!--**********************************************-->
+
+                <div class="row mb-3">
+                    <div class="col sm">
+                        <label for="height" class="form-label">Height (cm)</label>
+                        <input type="text" id="height" class="form-control" name="height" maxlength="3"
+                            formControlName="height">
+                        <div *ngIf="familyRegForm.get('height')?.touched && hasError('height','required')"
+                            class="text-danger">*Height is required.</div>
+                        <div *ngIf="familyRegForm.get('height')?.touched && hasError('height','minlength')"
+                            class="text-danger">*Height minimum 2 digits required.</div>
+                        <div *ngIf="familyRegForm.get('height')?.touched && hasError('height', 'pattern')"
+                            class="text-danger"> Height must contain only digits.</div>
+                    </div>
+                    <br>
+
+                    <div class="col sm">
+                        <label for="weight" class="form-label">Weight (kg)</label>
+                        <input type="text" id="weight" class="form-control" name="weight" maxlength="3"
+                            formControlName="weight">
+                        <div *ngIf="familyRegForm.get('weight')?.touched && hasError('weight','required')"
+                            class="text-danger">*weight is required.</div>
+                        <div *ngIf="familyRegForm.get('weight')?.touched && hasError('weight','minlength')"
+                            class="text-danger">* weight minimum 2 digits required.</div>
+                        <div *ngIf="familyRegForm.get('weight')?.touched && hasError('weight', 'pattern')"
+                            class="text-danger"> Weight must contain only digits.</div>
+
+                    </div>
+
+                    <div class="col sm">
+                        <label for="healthHistory" class="form-label">Health History</label>
+                        <input type="text" id="healthHistory" class="form-control" name="healthHistory"
+                            formControlName="healthHistory">
+                        <div *ngIf="familyRegForm.get('healthHistory')?.touched && hasError('healthHistory','required')"
+                            class="text-danger">*Height is required.</div>
+                        <div *ngIf="familyRegForm.get('healthHistory')?.touched && hasError('healthHistory','minlength')"
+                            class="text-danger">* Minimum 100 words.</div>
+                        <div *ngIf="familyRegForm.get('healthHistory')?.touched && hasError('healthHistory','maxlength')"
+                            class="text-danger">* Maximum 300 words.</div>
+                    </div>
+                </div>
+                <br>
+                <!--**********************************************-->
+                <div class="mb-3">
+                    <label for="contactNumber" class="form-label">Contact Number</label>
+                    <input type="text" id="contactNo" class="form-control" name="contactNo" maxlength="10"
+                        formControlName="contactNo">
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'required')"
+                        class="text-danger">
+                        *Contact number is required.
+                    </div>
+
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'minlength')"
+                        class="text-danger">
+                        *Contact number must be exactly 10 digits.
+                    </div>
+
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'maxlength')"
+                        class="text-danger">
+                        *Contact number must be exactly 10 digits.
+                    </div>
+
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'pattern')"
+                        class="text-danger">
+                        *Contact number must contain only digits.
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="dob" class="form-label" style="color:black;">Date Of Birth</label>
+                        <input type="date" id="dob" name="dob" class="dropdown" formControlName="dob" maxlength="10">
+                        <div *ngIf="familyRegForm.get('dob')?.touched && hasError('dob', 'required')"
+                            class="text-danger">
+                            *Date of birth is required.
+                        </div>
+                    </div>
+                    <div class="col sm">
+                        <label for="relationship">Relationship </label>
+                        <select formControlName="relationship" class="dropdown" id="relationship">
+                            <option value="" disabled selected></option>
+                            <option *ngFor="let group of relationship" [value]="group">{{ group }}</option>
+                        </select>
+                        <div *ngIf="hasError('relationship', 'required')" class="text-danger">*Relationship is required.
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button style="position:relative; left:40%; margin-right: 10px;" data-dismiss="modal"
+                    class="btn btn-danger" id="reset" (click)="closeAddFamilyMember()">Cancel</button>
+                <button style="position:relative; left:40%;" type="submit" (click)="saveFamilyDetails()" id="reset"
+                    class="btn btn-success">Submit</button>
+            
+            </form>
+
+        </div>
+    </div>
+    <div id="editFamilymodal">
+        <div class="form-container">
+            <form [formGroup]="familyRegForm">
+                <div class="box">
+                    <div class="text">
+                        <h3 align="center">Update Family Member</h3>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" id="firstName" class="form-control" name="firstName"
+                            [ngModel]="selectedFamilyMember.firstName" formControlName="firstname" readonly />
+                    </div>
+                    <br>
+
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" id="lastName" class="form-control" name="lastName"
+                            [ngModel]="selectedFamilyMember.lastName" formControlName="lastname" readonly />
+
+                    </div>
+                </div>
+
+                <br>
+                <!--**********************************************-->
+
+                <!--**********************************************-->
+
+                <div class="row mb-3">
+                    <div class="col sm">
+                        <label for="gender">Gender </label>
+                        <input type="text" id="gender" class="form-control" name="gender"
+                            [ngModel]="selectedFamilyMember.gender" formControlName="gender" readonly />
+
+                    </div>
+
+                    <div class="col sm">
+                        <label for="bloodGroup">Blood Group </label>
+                        <input type="text" id="bloodGroup" class="form-control disabled" name="bloodGroup"
+                            [ngModel]="selectedFamilyMember.bloodGroup" formControlName="bloodGroup" readonly />
+
+                    </div>
+                </div>
+
+
+                <br>
+                <!--**********************************************-->
+
+                <div class="row mb-3">
+                    <div class="col sm">
+                        <label for="height" class="form-label">Height (cm)</label>
+                        <input type="text" id="height" class="form-control" [ngModel]="selectedFamilyMember.height"
+                            name="height" maxlength="3" formControlName="height">
+                        <div *ngIf="familyRegForm.get('height')?.touched && hasError('height','required')"
+                            class="text-danger">*Height is required.</div>
+                        <div *ngIf="familyRegForm.get('height')?.touched && hasError('height','minlength')"
+                            class="text-danger">*Height minimum 2 digits required.</div>
+                        <div *ngIf="familyRegForm.get('height')?.touched && hasError('height', 'pattern')"
+                            class="text-danger"> Height must contain only digits.</div>
+                    </div>
+                    <br>
+
+                    <div class="col sm">
+                        <label for="weight" class="form-label">Weight (kg)</label>
+                        <input type="text" id="weight" class="form-control" name="weight"
+                            [ngModel]="selectedFamilyMember.weight" maxlength="2" formControlName="weight">
+                        <div *ngIf="familyRegForm.get('weight')?.touched && hasError('weight','required')"
+                            class="text-danger">*weight is required.</div>
+                        <div *ngIf="familyRegForm.get('weight')?.touched && hasError('weight','minlength')"
+                            class="text-danger">* weight minimum 2 digits required.</div>
+                        <div *ngIf="familyRegForm.get('weight')?.touched && hasError('weight', 'pattern')"
+                            class="text-danger"> Weight must contain only digits.</div>
+
+                    </div>
+
+                    <div class="col sm">
+                        <label for="healthHistory" class="form-label">Health History</label>
+                        <input type="text" id="healthHistory" class="form-control" name="healthHistory"
+                            [ngModel]="selectedFamilyMember.healthHistory" formControlName="healthHistory">
+                        <div *ngIf="familyRegForm.get('healthHistory')?.touched && hasError('healthHistory','required')"
+                            class="text-danger">*Height is required.</div>
+                        <div *ngIf="familyRegForm.get('healthHistory')?.touched && hasError('healthHistory','minlength')"
+                            class="text-danger">* Minimum 100 words.</div>
+                        <div *ngIf="familyRegForm.get('healthHistory')?.touched && hasError('healthHistory','maxlength')"
+                            class="text-danger">* Maximum 300 words.</div>
+                    </div>
+                </div>
+                <br>
+                <!--**********************************************-->
+                <div class="mb-3">
+                    <label for="contactNumber" class="form-label">Contact Number</label>
+                    <input type="text" id="contactNo" class="form-control" [ngModel]="selectedFamilyMember.contactNo"
+                        name="contactNo" maxlength="10" formControlName="contactNo">
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'required')"
+                        class="text-danger">
+                        *Contact number is required.
+                    </div>
+
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'minlength')"
+                        class="text-danger">
+                        *Contact number must be exactly 10 digits.
+                    </div>
+
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'maxlength')"
+                        class="text-danger">
+                        *Contact number must be exactly 10 digits.
+                    </div>
+
+                    <div *ngIf="familyRegForm.get('contactNo')?.touched && hasError('contactNo', 'pattern')"
+                        class="text-danger">
+                        *Contact number must contain only digits.
+                    </div>
+                </div>
+                <!--**********************************************-->
+
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="dob" class="form-label" style="color:black;">Date Of Birth</label>
+                        <input type="date" id="dob" [ngModel]="selectedFamilyMember.dob" name="dob" class="dropdown"
+                            formControlName="dob" readonly />
+
+                    </div>
+
+                    <!--**********************************************-->
+                    <div class="col sm">
+                        <label for="relationship">Relationship </label>
+                        <input type="text" id="relationship" class="form-control disabled" name="relationship"
+                            [ngModel]="selectedFamilyMember.relationship" formControlName="relationship" readonly />
+                    </div>
+                </div>
+                <br>
+                <!-- **********************************************-->
+
+                <!-- ********************************************** -->
+                <button style="position:relative; left:40%; margin-right: 10px;" data-dismiss="modal"
+                    class="btn btn-danger" id="reset" (click)="closeAddFamilyMember()">Cancel</button>
+                <button style="position:relative; left:40%;" type="submit"
+                    (click)=updateFamily(selectedFamilyMember.memberId) class="btn btn-success">Update</button>
+
+            </form>
+
+        </div>
+    </div>
+    

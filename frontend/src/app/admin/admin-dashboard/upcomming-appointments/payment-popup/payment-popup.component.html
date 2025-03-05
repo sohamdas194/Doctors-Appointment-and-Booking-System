@@ -1,0 +1,11 @@
+<h1>Pay ₹{{transactionDets.consultationFee}}</h1>
+<qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+
+<div class="row">
+    <img src="assets\images\BHIM UPI-01.png" alt="" width=auto height="50" class="col">
+</div>
+
+<button class="col btn btn-outline-success w-100" type="button" (click)="onPaidClick()">Mark as Paid</button>
+<mat-dialog-actions>
+    <button class="col btn btn-outline-danger w-100" type="button" (click)="onCancelClick()">Cancel</button>
+</mat-dialog-actions>

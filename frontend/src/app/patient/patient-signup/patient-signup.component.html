@@ -1,0 +1,319 @@
+<div class="fullscreen" style="background-image: url();">
+    <div class="form-container">
+        <form [formGroup]="patientRegForm" (ngSubmit)="onSubmit()">
+            <div class="box">
+                <div class="photo">
+                    <img style="width:470px; height:350px;"
+                        src="https://as1.ftcdn.net/v2/jpg/03/13/77/82/1000_F_313778250_Y0o5can6MA490Nt7G6p03Zfu5fKmWCIv.jpg"
+                        alt="profilephoto">
+                </div>
+                <br>
+                <div class="text">
+                    <h2 align="center">Patient Registration</h2>
+                </div>
+            </div>
+            <br><br>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" id="firstName" class="form-control" name="firstName" formControlName="firstname">
+                    <div *ngIf="patientRegForm.get('firstname')?.invalid && (patientRegForm.get('firstname')?.dirty || patientRegForm.get('firstname')?.touched)"
+                         class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('firstname')?.errors?.['required']" class="form-error-message">
+                            *FirstName is required.
+                        </div>
+                        <div *ngIf="patientRegForm.get('firstname')?.errors?.['minlength']" class="text-danger">*First name minimum 3 characters required.</div>
+                        <div *ngIf="patientRegForm.get('firstname')?.errors?.['pattern']" class="form-error-message">
+                            *firstName must contain only alphabetic characters and spaces.
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="col-md-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" class="form-control" name="lastName" formControlName="lastname">
+                    <div *ngIf="patientRegForm.get('lastname')?.invalid && (patientRegForm.get('lastname')?.dirty || patientRegForm.get('lastname')?.touched)"
+                         class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('lastname')?.errors?.['required']" class="form-error-message">
+                            *FirstName is required.
+                        </div>
+                        <div *ngIf="patientRegForm.get('lastname')?.errors?.['minlength']" class="text-danger">*First name minimum 3 characters required.</div>
+                        <div *ngIf="patientRegForm.get('lastname')?.errors?.['pattern']" class="form-error-message">
+                            *firstName must contain only alphabetic characters and spaces.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <!--**********************************************-->
+
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" name="email" formControlName="email"   (change)="checkEmail($event)">
+                <div *ngIf="usedEmail" class="text-danger form-error"> *Email already in use</div>
+                <div *ngIf="patientRegForm.get('email')?.invalid && (patientRegForm.get('email')?.dirty || patientRegForm.get('email')?.touched)"
+                        class="text-danger form-error">
+                    <div *ngIf="patientRegForm.get('email')?.errors?.['required']" class="form-error-message">*Email is
+                        required.</div>
+                    <div *ngIf="patientRegForm.get('email')?.errors?.['email']" class="form-error-message">*Invalid email format.
+
+                    </div>
+                </div>
+            </div>
+            <!--**********************************************-->
+
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" name="password" formControlName="password">
+
+                <div *ngIf="patientRegForm.get('password')?.invalid && (patientRegForm.get('password')?.dirty || patientRegForm.get('password')?.touched)"
+                        class="text-danger form-error">
+                    <div *ngIf="patientRegForm.get('password')?.errors?.['required']" class="form-error-message">*Password
+                        is required.</div>
+                    <div *ngIf="patientRegForm.get('password')?.errors?.['pattern']" class="form-error-message">
+                        *Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase
+                        letter,one number,and one special character. .</div>
+                </div>
+
+            </div>
+            <!--**********************************************-->
+
+            <div class="mb-3">
+
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+
+                <input type="password" id="confirmPassword" class="form-control" name="confirmPassword"
+                    formControlName="confirmPassword" (blur)="patientRegForm.get('confirmPassword')?.markAsTouched()">
+                <div *ngIf="patientRegForm.get('confirmPassword')?.touched && hasError('confirmPassword', 'required')"
+                    class="text-danger">
+                    *Confirming the new password is required.
+                </div>
+                <div *ngIf="patientRegForm.get('confirmPassword')?.touched && patientRegForm.hasError('passwordMismatch')"
+                    class="text-danger"> *Passwords do not match. </div>
+
+            </div>
+            <br>
+            <!--**********************************************-->
+            <div class="row mb-3">
+                <div class="col sm">
+                    <label for="gender">Gender </label>
+                    <select formControlName="gender" class="dropdown" id="gender">
+                        <option value="" disabled selected></option>
+                        <option *ngFor="let group of genders" [value]="group">{{ group }}</option>
+                    </select>
+                    <div *ngIf="patientRegForm.get('gender')?.invalid && (patientRegForm.get('gender')?.dirty || patientRegForm.get('gender')?.touched)"
+                            class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('gender')?.errors?.['required']" class="form-error-message">*Gender is
+                            required.</div>
+                    </div>
+                </div>
+
+                <div class="col sm">
+                    <label for="bloodGroup">Blood Group </label>
+                    <select formControlName="bloodGroup" class="dropdown" id="bloodGroup">
+                      <option value="" disabled selected></option>
+                        <option *ngFor="let group of bloodGroups" [value]="group">{{ group }}</option>
+                    </select>
+                    <div *ngIf="patientRegForm.get('bloodGroup')?.invalid && (patientRegForm.get('bloodGroup')?.dirty || patientRegForm.get('bloodGroup')?.touched)"
+                            class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('bloodGroup')?.errors?.['required']" class="form-error-message">*Blood
+                            group is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+
+            <!--  ********************************************************-->
+
+
+            <div class="mb-3">
+                <label for="contactNumber" class="form-label">Contact Number</label>
+                <input type="text" id="contactNumber" class="form-control" name="contactNumber" maxlength="10"
+                    formControlName="contactNumber">
+                <div *ngIf="patientRegForm.get('contactNumber')?.invalid && (patientRegForm.get('contactNumber')?.dirty || patientRegForm.get('contactNumber')?.touched)"
+                        class="text-danger form-error">
+                    <div *ngIf="patientRegForm.get('contactNumber')?.errors?.['required']" class="form-error-message">*Contact
+                        number is required.</div>
+                    <div *ngIf="patientRegForm.get('contactNumber')?.errors?.['pattern']" class="form-error-message">*Contact
+                        number must be in numbers.</div>
+                    <div *ngIf="patientRegForm.get('contactNumber')?.errors?.['minlength'] && !patientRegForm.get('contactNumber')?.errors?.['pattern']" class="form-error-message">*Contact
+                        number must be in 10 digits only.</div>
+                </div>
+            </div>
+
+            <!--**********************************************-->
+
+            <div class="mb-3">
+                <label for="emergencyContact" class="form-label">Emergency Contact</label>
+                <input type="text" id="emergencyContact" class="form-control" name="emergencyContact" maxlength="10"
+                    formControlName="emergencyContact">
+                <div *ngIf="patientRegForm.get('emergencyContact')?.invalid && (patientRegForm.get('emergencyContact')?.dirty || patientRegForm.get('emergencyContact')?.touched)"
+                     class="text-danger form-error">
+                <div *ngIf="patientRegForm.get('emergencyContact')?.errors?.['required']"
+                    class="text-danger">
+                    *Emergency Contact number is required.
+                </div>
+
+                <div *ngIf="patientRegForm.get('emergencyContact')?.errors?.['minlength'] && !patientRegForm.get('emergencyContact')?.errors?.['pattern']"
+                    class="text-danger">
+                    *Emergency Contact number must be exactly 10 digits.
+                </div>
+
+                <div *ngIf="patientRegForm.get('emergencyContact')?.errors?.['maxlength'] && !patientRegForm.get('emergencyContact')?.errors?.['pattern']"
+                    class="text-danger">
+                    *Emergency Contact number must be exactly 10 digits.
+                </div>
+
+                <div *ngIf="patientRegForm.get('emergencyContact')?.errors?.['pattern']"
+                    class="text-danger">
+                    *Emergency Contact number must contain only digits.
+                </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="dob" class="form-label" style="color:black;">Date Of Birth</label>
+                    <input type="date" id="dob" name="dob" class="dropdown" formControlName="dob" [max]="maxDate">
+                    <div *ngIf="patientRegForm.get('dob')?.invalid && (patientRegForm.get('dob')?.dirty || patientRegForm.get('dob')?.touched)"
+                            class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('dob')?.errors?.['required']" class="form-error-message">*Date of birth
+                            is required.</div>
+                        <div *ngIf="patientRegForm.get('dob')?.errors?.['invalidAge']" class="form-error-message">*Minimum age
+                            required is 18 years.</div>
+                    </div>
+                </div>
+
+                <!--**********************************************-->
+
+                <div class="col sm">
+                    <label for="maritalstatus">Marital Status </label>
+                    <select formControlName="maritalStatus" class="dropdown" id="maritalStatus">
+                        <option value="" disabled selected></option>
+                        <option *ngFor="let group of MaritalStatus" [value]="group">{{ group }}</option>
+                    </select>
+                    <div *ngIf="patientRegForm.get('maritalStatus')?.invalid && (patientRegForm.get('maritalStatus')?.dirty || patientRegForm.get('maritalStatus')?.touched)"
+                         class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('maritalStatus')?.errors?.['required']" class="form-error-message">*MaritalStatus is
+                            required.</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- **********************************************-->
+
+            <!-- ********************************************** -->
+
+            <br>
+
+            <div class="address">
+                <h3 align="center">Address</h3>
+                <div class="mb-3">
+                    <label for="street1" class="form-label">Street</label>
+                    <input type="text" id="street1" class="form-control" name="street1" formControlName="street1">
+                    <div *ngIf="patientRegForm.get('street1')?.invalid && (patientRegForm.get('street1')?.dirty || patientRegForm.get('street1')?.touched)"
+                            class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('street1')?.errors?.['required']"  class="text-danger form-error">
+                            *Street is required.</div>
+                        <div *ngIf="patientRegForm.get('street1')?.errors?.['minlength']" class="text-danger form-error">
+                            *Street must be at least 4 characters long.</div>
+                        <div *ngIf="patientRegForm.get('street1')?.errors?.['maxlength']" class="text-danger form-error">
+                            *Street must not exceed 100 characters.</div>
+                    <div *ngIf="patientRegForm.get('street1')?.errors?.['pattern']" class="text-danger form-error">
+                        *Enter Valid Address</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="landmark" class="form-label">landmark</label>
+                    <input type="text" id="landmark" class="form-control" name="landmark" formControlName="landmark">
+                    <div *ngIf="patientRegForm.get('landmark')?.invalid && (patientRegForm.get('landmark')?.dirty || patientRegForm.get('landmark')?.touched)"
+                         class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('landmark')?.errors?.['required']"  class="text-danger form-error">
+                            *Landmark is required.</div>
+                        <div *ngIf="patientRegForm.get('landmark')?.errors?.['minlength'] && !patientRegForm.get('landmark')?.errors?.['pattern'] " class="text-danger form-error">
+                            *Landmark must be at least 4 characters long.</div>
+                        <div *ngIf="patientRegForm.get('landmark')?.errors?.['maxlength']" class="text-danger form-error">
+                            *Landmark must not exceed 100 characters.</div>
+                        <div *ngIf="patientRegForm.get('landmark')?.errors?.['pattern']" class="text-danger form-error">
+                            *Enter Valid Landmark</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" id="city" class="form-control" name="city" formControlName="city">
+                        <div *ngIf="patientRegForm.get('city')?.invalid && (patientRegForm.get('city')?.dirty || patientRegForm.get('city')?.touched)"
+                             class="text-danger form-error">
+                            <div *ngIf="patientRegForm.get('city')?.errors?.['required']" class="form-error-message">
+                                *City is required.
+                            </div>
+                            <div *ngIf="patientRegForm.get('city')?.errors?.['pattern']" class="form-error-message">
+                                *City must contain only alphabetic characters and spaces.
+                            </div>
+                            <div *ngIf="patientRegForm.get('city')?.errors?.['minlength'] && !patientRegForm.get('landmark')?.errors?.['pattern'] " class="text-danger form-error">
+                                *City must be at least 3 characters long.</div>
+                            <div *ngIf="patientRegForm.get('city')?.errors?.['maxlength']" class="text-danger form-error">
+                                *City must not exceed 100 characters.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" id="state" class="form-control" name="state" formControlName="state">
+                        <div *ngIf="patientRegForm.get('state')?.invalid && (patientRegForm.get('state')?.dirty || patientRegForm.get('state')?.touched)"
+                             class="text-danger form-error">
+                            <div *ngIf="patientRegForm.get('state')?.errors?.['required']" class="form-error-message">
+                                *State is required.
+                            </div>
+                            <div *ngIf="patientRegForm.get('state')?.errors?.['pattern']" class="form-error-message">
+                                *State must contain only alphabetic characters and spaces.
+                            </div>
+                            <div *ngIf="patientRegForm.get('state')?.errors?.['minlength'] && !patientRegForm.get('state')?.errors?.['pattern'] " class="text-danger form-error">
+                                *State must be at least 3 characters long.</div>
+                            <div *ngIf="patientRegForm.get('state')?.errors?.['maxlength']" class="text-danger form-error">
+                                *State must not exceed 100 characters.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pincode" class="form-label">PinCode</label>
+                    <input type="text" id="pincode" class="form-control" name="pincode" maxlength="6"
+                        formControlName="pincode">
+
+                    <div *ngIf="patientRegForm.get('pincode')?.invalid && (patientRegForm.get('pincode')?.dirty || patientRegForm.get('pincode')?.touched)"
+                         class="text-danger form-error">
+                        <div *ngIf="patientRegForm.get('pincode')?.errors?.['required']" class="form-error-message">
+                            *Pincode is required.
+                        </div>
+                        <div *ngIf="patientRegForm.get('pincode')?.errors?.['pattern']" class="form-error-message">
+                            *Pincode must contain only alphabetic characters and spaces.
+                        </div>
+                        <div *ngIf="patientRegForm.get('pincode')?.errors?.['minlength'] && !patientRegForm.get('pincode')?.errors?.['pattern']" class="text-danger form-error">
+                            *Pincode must be at least 3 numbers.</div>
+                        <div *ngIf="patientRegForm.get('pincode')?.errors?.['maxlength'] && !patientRegForm.get('pincode')?.errors?.['pattern']" class="text-danger form-error">
+                            *Pincode must not exceed 6 numbers.</div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <br>
+            <br>
+
+            <button style="position:relative; left:40%;" type="submit" class="btn btn-success" [disabled]="!patientRegForm.valid">Register</button>
+
+        </form>
+
+    </div>
+</div>
+ 

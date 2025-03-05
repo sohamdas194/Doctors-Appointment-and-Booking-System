@@ -1,0 +1,197 @@
+<div class="container mat-elevation-z24 mt-3 rounded">
+  <h2>My Availability</h2>
+  <div class="col-md-4 d-flex align-items-center">
+    <div class="d-flex align-items-center">
+      <div class="me-2">
+        <div class="color-box bg-success"></div>
+        <span>8am-12pm</span>
+      </div>
+      <div class="me-2">
+        <div class="color-box bg-warning"></div>
+        <span>2pm-6pm</span>
+      </div>
+      <div class="me-2">
+        <div class="color-box bg-danger"></div>
+        <span>Leave</span>
+      </div>
+    </div>
+  </div>
+  <br>
+  
+  <div *ngIf="availableDates.length <= 2">
+    <div class="row mb-3">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="availabilityFrom"
+            >Availability From <span class="text-danger">*</span></label
+          >
+          <input
+            type="date"
+            class="form-control"
+            id="availabilityFrom"
+            [(ngModel)]="availabilityFrom"
+            (change)="updateDateRange()"
+            [min] = "today" 
+            (ngModelChange)="setMaxToDateConstraint()"
+          />
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="availabilityTo"
+            >Availability To <span class="text-danger">*</span></label
+          >
+          <input
+            type="date"
+            class="form-control"
+            id="availabilityTo"
+            [(ngModel)]="availabilityTo"
+            (change)="updateDateRange()"
+            [min] = "minDate"
+            [max] = "maxDate"
+          />
+        </div>
+      </div>
+    </div>
+
+   
+    
+
+
+    <div class="row mb-3">
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label for="selectedTimeSlot"
+            >Time Slot <span class="text-danger">*</span></label
+          >
+          <select
+            class="form-control"
+            id="selectedTimeSlot"
+            [(ngModel)]="selectedTimeSlot"
+          >
+            <option value="8am-12pm">8am-12pm</option>
+            <option value="2pm-6pm">2pm-6pm</option>
+            <option value="leave">leave</option>
+          </select>
+        </div>
+      </div>
+      
+      <br /><br /><br />
+      <br />
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="saveDoctorDates()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <div class="">
+    <div class="col-md-12">
+      <h3>Available Dates</h3>
+      <div class="row">
+        <div
+          *ngFor="let availableDate of availableDates"
+          class="col-md-2 mb-1"
+          (click)="showAvailableDetails(availableDate)"
+
+        >
+          <div
+            class="card w-auto h-auto"
+            [ngClass]="{
+              'shift1': availableDate.shift === 1,
+              'bg-warning text-dark': availableDate.shift === 2,
+              'bg-danger text-white': availableDate.shift === 0
+            }"
+          >
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ availableDate.date | date : "dd-MM-yyyy" }}
+              </h5>
+              <p class="card-text">{{ getShiftLabel(availableDate.shift) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+
+    <div class="modal" style="display: block" *ngIf="showModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Avaiability Details</h2>
+          <span class="close" (click)="closeModal()">&times;</span>
+          <div class="modal-body">
+            <span style="font-size: large;">
+              Date:{{ selectedAvailabilityDetails.date | date : "dd-MM-yyyy" }}
+            </span>
+          </div>
+          <div class="form-group">
+            <label>
+              <input
+                type="radio"
+                [(ngModel)]="selectedAvailabilityDetails.shift"
+                [value]="1"
+              />
+              8am-12pm
+            </label>
+            <label>
+              <input
+                type="radio"
+                [(ngModel)]="selectedAvailabilityDetails.shift"
+                [value]="2"
+              />
+              2pm-6pm
+            </label>
+            <label>
+              <input
+                type="radio"
+                [(ngModel)]="selectedAvailabilityDetails.shift"
+                [value]="0"
+              />
+              Leave
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            (click)="updateAvailable(selectedAvailabilityDetails)"
+          >
+            Update
+          </button>
+          <button class="btn btn-danger" (click)="closeModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+   </div>
+
+</div>
+<br>
+<br>
+<br>
+<br><br>
+<div>
+    <footer class="footer-bg ">
+      <div
+        class="footer-theme d-flex justify-content-center align-items-center h-100 "
+      >
+        <h4 class="text-muted mb-0">@we and you for Tomorrow</h4>
+      </div>
+    </footer>
+  </div>
+
+
+

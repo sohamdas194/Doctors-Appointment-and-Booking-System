@@ -1,0 +1,322 @@
+<div class="fullscreen mat-elevation-z24" >
+  <main>
+    <div class="container my-2">
+      <form [formGroup]="DoctorRegistrationPage" (ngSubmit)="onSubmit()" class="form-container bg-light p-4 rounded"
+        (ngModelChange)="checkFormValidity()">
+        <div class="box1 ">
+          <div class="photo">
+              <img style="width:550px; height:350px; margin-bottom:20px;"
+                  src="https://as1.ftcdn.net/v2/jpg/03/13/77/82/1000_F_313778250_Y0o5can6MA490Nt7G6p03Zfu5fKmWCIv.jpg"
+                  alt="profilephoto">
+          </div>
+ 
+          <div class="text">
+              <h2 align="center">Doctor Registration</h2>
+          </div>
+        </div>
+      
+        <div class="scrollable-container">
+         
+          <label for="email" class="form-label">Email ID <span class="text-danger">*</span></label>
+          <input type="email" id="email" placeholder="email@address.com" class="form-control" formControlName=email  (change)="checkEmail($event)" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div *ngIf="usedEmail" class="text-danger form-error"> *Email already in use</div>
+          <div
+            *ngIf="DoctorRegistrationPage.get('email')?.invalid && (DoctorRegistrationPage.get('email')?.dirty || DoctorRegistrationPage.get('email')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('email')?.errors?.['required']" class="form-error-message">*Email is
+              required.</div>
+                  
+           
+            <div *ngIf="DoctorRegistrationPage.get('email')?.errors?.['email']" class="form-error-message">*Invalid email format.
+              
+             </div>
+          </div>
+        
+      
+          <br>
+        
+        
+          <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+          <input type="password" id="password" class="form-control" formControlName="password" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="DoctorRegistrationPage.get('password')?.invalid && (DoctorRegistrationPage.get('password')?.dirty || DoctorRegistrationPage.get('password')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('password')?.errors?.['required']" class="form-error-message">*Password
+              is required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('password')?.errors?.['invalidPassword']" class="form-error-message">
+              *Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase
+              letter, and one number.</div>
+          </div>
+       
+          <br>
+  
+       
+          <label for="confirmpassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+          <input type="password" id="confirmpassword" class="form-control" formControlName="confirmpassword" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="DoctorRegistrationPage.get('confirmpassword')?.invalid && (DoctorRegistrationPage.get('confirmpassword')?.dirty || DoctorRegistrationPage.get('confirmpassword')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('confirmpassword')?.errors?.['required']" class="form-error-message">
+              *Confirm password is required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('confirmpassword')?.errors?.['passwordMismatch']"
+              class="form-error-message">*Passwords do not match.</div>
+          </div>
+        
+          <br>
+       
+          <div class="row mb-3">
+            <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+          <input type="text" id="firstName" class="form-control" formControlName="firstName" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="DoctorRegistrationPage.get('firstName')?.invalid && (DoctorRegistrationPage.get('firstName')?.dirty || DoctorRegistrationPage.get('firstName')?.touched)"
+            class="alert alert-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('firstName')?.errors?.['required']" class="form-error-message">*First
+              name is
+              required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('firstName')?.errors?.['minlength']" class="form-error-message">*First
+              name
+              must be at least 3 characters long.</div>
+            <div *ngIf="DoctorRegistrationPage.get('firstName')?.errors?.['invalidName']" class="form-error-message">
+              *First name
+              is not valid.</div>
+          </div>
+          </div>
+        
+        
+           <br>
+        
+         
+            <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+          <input type="text" id="lastName" class="form-control" formControlName="lastName" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="DoctorRegistrationPage.get('lastName')?.invalid && (DoctorRegistrationPage.get('lastName')?.dirty || DoctorRegistrationPage.get('lastName')?.touched)"
+            class="alert alert-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('lastName')?.errors?.['required']" class="form-error-message">*Last
+              name is
+              required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('lastName')?.errors?.['minlength']" class="form-error-message">*Last
+              name
+              must be at least 4 characters long.</div>
+            <div *ngIf="DoctorRegistrationPage.get('lastName')?.errors?.['invalidName']" class="form-error-message">*Last
+              name
+              is not valid.</div>
+          </div>
+            </div>
+          </div>
+     
+          <br>
+        
+         <div class="row mb-3">
+          <div class="col-md-6">
+          <label for="Gender" class="form-label">Gender <span class="text-danger">*</span></label>
+          <select class="form-control" formControlName="gender" (paste)="onPaste($event)" (copy)="onCopy($event)">
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <div
+            *ngIf="DoctorRegistrationPage.get('gender')?.invalid && (DoctorRegistrationPage.get('gender')?.dirty || DoctorRegistrationPage.get('gender')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('gender')?.errors?.['required']" class="form-error-message">*Gender is
+              required.</div>
+          </div>
+         </div>
+        
+  
+  
+         <div class="col-md-6">
+          <label for="dateOfBirth" class="form-label">Date Of Birth <span class="text-danger">*</span></label>
+          <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" formControlName="dateOfBirth" [max]="maxDate" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="DoctorRegistrationPage.get('dateOfBirth')?.invalid && (DoctorRegistrationPage.get('dateOfBirth')?.dirty || DoctorRegistrationPage.get('dateOfBirth')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('dateOfBirth')?.errors?.['required']" class="form-error-message">*Date of birth
+              is required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('dateOfBirth')?.errors?.['invalidAge']" class="form-error-message">*Minimum age
+              required is 23 years.</div>
+          </div>
+         </div>
+         </div>
+      
+         <br>
+       
+         <div class="row mb-3">
+          <div class="col-md-6">
+          <label for="phoneNumber" class="form-label">Contact Number <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="1234567890" class="form-control"
+              formControlName="phoneNumber" pattern="[0-9]{10}" minlength="10" maxlength="10" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          </div>
+          <div
+            *ngIf="DoctorRegistrationPage.get('phoneNumber')?.invalid && (DoctorRegistrationPage.get('phoneNumber')?.dirty || DoctorRegistrationPage.get('phoneNumber')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('phoneNumber')?.errors?.['required']" class="form-error-message">*Contact
+              number is required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('phoneNumber')?.errors?.['pattern']" class="form-error-message">*Contact
+              number must be a 10-digit number.</div>
+          </div>
+         </div>
+      
+  
+         <div class="col-md-6">
+          <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+          <input type="text" id="country" class="form-control" formControlName="country" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="DoctorRegistrationPage.get('country')?.invalid && (DoctorRegistrationPage.get('country')?.dirty || DoctorRegistrationPage.get('country')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('country')?.errors?.['required']" class="form-error-message">*Country
+              is required.</div>
+            <div *ngIf="DoctorRegistrationPage.get('country')?.errors?.['minlength']" class="form-error-message">*Country
+              must be at least 3 characters long.</div>
+            <div *ngIf="DoctorRegistrationPage.get('country')?.errors?.['invalidName']" class="form-error-message">*space
+              is not allowed after word.</div>
+          </div>
+         </div>
+         </div>
+    
+          <br>
+  
+         <div class="box">
+          <div class="form-group">
+            <label for="address1" class="form-label">Address 1 <span class="text-danger">*</span></label>
+            <textarea id="address1" class="form-control" formControlName="address1" (paste)="onPaste($event)" (copy)="onCopy($event)"></textarea>
+            <div
+              *ngIf="DoctorRegistrationPage.get('address1')?.invalid && (DoctorRegistrationPage.get('address1')?.dirty || DoctorRegistrationPage.get('address1')?.touched)"
+              class="text-danger form-error">
+              <div *ngIf="DoctorRegistrationPage.get('address1')?.errors?.['required']" class="form-error-message">
+                *Address 1 is required.</div>
+              <div *ngIf="DoctorRegistrationPage.get('address1')?.errors?.['minlength']" class="form-error-message">
+                *Address 1 must be at least 3 characters long.</div>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="address2" class="form-label">Address2:</label>
+            <textarea id="address2" class="form-control" formControlName="address2" (paste)="onPaste($event)" (copy)="onCopy($event)"></textarea>
+          </div>
+          <br>
+          <div class="form-group row">
+            <div class="col-md-4">
+              <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+              <input type="text" id="state" class="form-control" formControlName="state" placeholder="State" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <div *ngIf="DoctorRegistrationPage.get('state')?.invalid && (DoctorRegistrationPage.get('state')?.dirty || DoctorRegistrationPage.get('state')?.touched)"
+                class="text-danger form-error">
+                <div *ngIf="DoctorRegistrationPage.get('state')?.errors?.['required']" class="form-error-message">
+                  *State is required.
+                </div>
+                <div *ngIf="DoctorRegistrationPage.get('state')?.errors?.['invalidName']" class="form-error-message">
+                  *State must contain only alphabetic characters and spaces.
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="col-md-4">
+              <label for="city" class="form-label">City <span class="text-danger">*</span></label>
+              <input type="text" id="city" class="form-control" formControlName="city" placeholder="City" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <div *ngIf="DoctorRegistrationPage.get('city')?.invalid && (DoctorRegistrationPage.get('city')?.dirty || DoctorRegistrationPage.get('city')?.touched)"
+                class="text-danger form-error">
+                <div *ngIf="DoctorRegistrationPage.get('city')?.errors?.['required']" class="form-error-message">
+                  *City is required.
+                </div>
+                <div *ngIf="DoctorRegistrationPage.get('city')?.errors?.['invalidName']" class="form-error-message">
+                  *City must contain only alphabetic characters and spaces.
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="col-md-4">
+              <label for="pinCode" class="form-label">Pin Code <span class="text-danger">*</span></label>
+              <input type="text" id="pinCode" class="form-control" formControlName="pinCode" placeholder="Pin Code" pattern="[0-9]{6}" minlength="6" maxlength="6" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <div *ngIf="DoctorRegistrationPage.get('pinCode')?.invalid && (DoctorRegistrationPage.get('pinCode')?.dirty || DoctorRegistrationPage.get('pinCode')?.touched)"
+                class="text-danger form-error">
+                <div *ngIf="DoctorRegistrationPage.get('pinCode')?.errors?.['required']" class="form-error-message">
+                  *Pin Code is required.
+                </div>
+                <div *ngIf="DoctorRegistrationPage.get('pinCode')?.errors?.['minlength'] || DoctorRegistrationPage.get('pinCode')?.errors?.['maxlength']"
+                  class="form-error-message">
+                  *Pin Code must be 6 characters long.
+                </div>
+                <div *ngIf="DoctorRegistrationPage.get('pinCode')?.errors?.['pattern']" class="form-error-message">
+                  *Pin Code must be a valid 6-digit number.
+                </div>
+              </div>
+            </div>
+          </div>
+         </div>
+          <br>
+         <div class="row mb-3">
+          <div class="col-md-6">
+          <label for="consultingFrom" class="form-label">Consulting From <span class="text-danger">*</span></label>
+          <input type="date" id="consultingFrom" name="consultingFrom" class="form-control" formControlName="consultingFrom" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div *ngIf="DoctorRegistrationPage.get('consultingFrom')?.invalid && (DoctorRegistrationPage.get('consultingFrom')?.dirty || DoctorRegistrationPage.get('consultingFrom')?.touched)" class="text-danger form-error">
+            *Consulting date is required.
+            <div *ngIf="DoctorRegistrationPage.get('consultingFrom')?.errors?.['invalidConsultingDate']" class="form-error-message">*Consulting from date can't be in the future.</div>
+            <div *ngIf="DoctorRegistrationPage.get('consultingFrom')?.errors?.['invalidConsultingFutureDate'] && (DoctorRegistrationPage.get('consultingFrom')?.dirty || DoctorRegistrationPage.get('consultingFrom')?.touched)" class="form-error-message">*Consulting from date can't be before date of birth.</div>
+            <div *ngIf="DoctorRegistrationPage.get('consultingFrom')?.errors?.['invalidConsultingAge'] && (DoctorRegistrationPage.get('consultingFrom')?.dirty || DoctorRegistrationPage.get('consultingFrom')?.touched)" class="form-error-message">*Age should be greater than or equal to 23 to start your service.</div>
+ 
+          </div>
+          
+          </div>
+          <br>
+ 
+          <div class="col-md-6">
+            <label for="BloodGroup" class="form-label">Blood Group <span class="text-danger">*</span></label>
+            <select class="form-control" id="BloodGroup" formControlName="bloodGroup" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <option value="" disabled selected>Select Blood Group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+            </select>
+          <div
+              *ngIf="DoctorRegistrationPage.get('bloodGroup')?.invalid && (DoctorRegistrationPage.get('bloodGroup')?.dirty || DoctorRegistrationPage.get('bloodGroup')?.touched)"
+              class="text-danger form-error">
+              <div *ngIf="DoctorRegistrationPage.get('bloodGroup')?.errors?.['required']" class="form-error-message">*Blood
+                group is required.</div>
+          </div>
+          </div>
+         </div>
+ 
+ 
+        
+     
+          <label for="Specialization" class="form-control"
+            class="form-label">Specialization<span class="text-danger">*</span></label>
+          <select class="form-control" id="Specialization" formControlName="specialization" (paste)="onPaste($event)" (copy)="onCopy($event)">
+            <option value="" disabled selected>Select Specialization</option>
+            <option *ngFor="let specialization of specializations" [value]="specialization">{{specialization}}</option>
+          </select>
+ 
+          <div
+            *ngIf="DoctorRegistrationPage.get('specialization')?.invalid && (DoctorRegistrationPage.get('specialization')?.dirty || DoctorRegistrationPage.get('specialization')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="DoctorRegistrationPage.get('specialization')?.errors?.['required']" class="form-error-message">
+              *Specialization is required.</div>
+          </div>
+        
+  
+         <br><br>
+  
+         <button type="submit" id="submitBtn" class="btn btn-primary" style="position: relative; left: 40%;" [disabled]="DoctorRegistrationPage.invalid || usedEmail" >
+          Register
+         </button>    
+ 
+        </div>
+      </form>
+    </div>
+ 
+    
+  </main>
+ 
+<footer class="footer-bg">
+  <div class="footer-theme container d-flex justify-content-center align-items-center h-100">
+    <h4 class="text-muted mb-0">@we and you for Tomorrow</h4>
+  </div>
+</footer>

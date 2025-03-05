@@ -1,0 +1,23 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: doctorappointmentsystem845@gmail.com
+    password: xcas owms voah qayj
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/dabs?createDatabaseIfNotExist=true
+    username: root
+    password: Lalitha@14
+
+server:
+  port: 8083

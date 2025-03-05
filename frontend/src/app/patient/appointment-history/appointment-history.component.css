@@ -1,0 +1,29 @@
+  ::ng-deep .mat-table th {
+    background-color: #007bff;
+    color: white;
+    padding: 2px;
+  }
+ 
+  .form-group input,
+  .form-group select {
+    margin-right: 1rem;
+  }
+
+  .form-group button {
+    margin-left: 1rem;
+  }
+  .mat-elevation-z8 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .mat-table {
+    flex-grow: 1;
+    overflow-x: auto;
+  }
+
+  .mat-paginator {
+    flex-shrink: 0;
+  }
+

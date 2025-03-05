@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>{{doctor.name}}, {{doctor.specialization}}</h2>
+<mat-dialog-content>
+
+    <form [formGroup]="bookingDateForm" *ngIf="!isBookingDateSet">
+
+        <div class="my-2">
+            <p>Enter Appointment Date:</p>
+            <input class="form-control mt-2" type="date" [min]="minDate" [max]="maxDate" formControlName="apmntDate">
+            <span class="form-text text-danger"
+                *ngIf="(bookingDateForm.get('apmntDate')?.touched || bookingDateFormSubmitted) && (bookingDateForm.get('apmntDate')?.getError('required'))">
+                    Booking date is required
+            </span>
+        </div>
+    </form>
+
+    <form [formGroup]="bookingForm" *ngIf="isBookingDateSet">
+        
+        <div>
+            <div>
+                <mat-button-toggle-group formControlName="familySelector" class="mt-2 w-100" [ngModel]="enableFamilySelectorBool">
+                    <mat-button-toggle class="w-50" [value]=false (click)="onForSelfClick()" [checked]="true">Book for Self</mat-button-toggle>
+                    <mat-button-toggle class="w-50" [value]=true (click)="enableFamilySelectorBool=true" *ngIf="familyMembers.length > 0">Book for Family</mat-button-toggle>
+                </mat-button-toggle-group>
+
+                <div *ngIf="enableFamilySelectorBool">
+                    <select class="form-select mt-1 mb-2" formControlName="famMemId">
+                        <option value="" disabled selected>Select Family Member</option>
+                        <option *ngFor="let member of familyMembers" [value]="member.memberId">{{ member.name + " (" + member.gender.charAt(0).toUpperCase() + member.age + ")" }}</option>
+                    </select>
+                    <span class="form-text text-danger"
+                        *ngIf="(bookingForm.get('famMemId')?.touched || (bookingFormSubmitted && enableFamilySelectorBool)) && (bookingForm.get('famMemId')?.getError('memberRequired'))">
+                            Family member is required
+                    </span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="m-2">
+                <p>Select Appointment slot:</p>
+                <mat-chip-list formControlName="apmntSlot">
+                    <mat-chip color="accent" #chip="matChip" (click)='chip.selectViaInteraction()' *ngFor="let slot of appointmentSlots.availableSlots" [value]="slot">{{ appointmentSlots.doctorShift==1 ? firstHalfSlotLookup[slot-1] : secondHalfSlotLookup[slot-1] }}</mat-chip>
+                </mat-chip-list>
+                <span class="form-text text-danger"
+                    *ngIf="(bookingForm.get('apmntSlot')?.touched || bookingFormSubmitted) && (bookingForm.get('apmntSlot')?.getError('required'))">
+                        Appointment slot is required
+                </span>
+            </div>
+            <br>
+
+            <div class="m-2">
+                <p>Patient comments:</p>
+                <textarea class="form-control" formControlName="patientCmnt"></textarea>
+                <span class="form-text text-danger"
+                    *ngIf="(bookingForm.get('patientCmnt')?.touched || bookingFormSubmitted) && (bookingForm.get('patientCmnt')?.getError('required'))">
+                        Patient comment is required
+                </span>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="row">
+    <button class="col bg-body-secondary" type="button" mat-button (click)="onNoClick()" *ngIf="!isBookingDateSet">No Thanks</button>
+    <button class="col bg-body-secondary" type="button" mat-button (click)="onBackClick()" *ngIf="isBookingDateSet">Back</button>
+    <button class="col bg-success-subtle" type="button" mat-button (click)="onDateSetClick()" *ngIf="!isBookingDateSet">Next</button>
+    <button class="col bg-info-subtle" type="submit" mat-button (click)="onBookClick()" cdkFocusInitial *ngIf="isBookingDateSet">Book</button>
+</mat-dialog-actions>

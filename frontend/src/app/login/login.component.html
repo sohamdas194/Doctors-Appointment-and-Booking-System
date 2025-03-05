@@ -1,0 +1,50 @@
+<div class="container w-50 mt-3 bg-light rounded mat-elevation-z24">
+
+    <h1 class="py-2 px-1">
+        Login
+    </h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+        <div class="d-grid gap-3 p-3 m-0 border-0">
+            <div class="alert alert-danger" *ngIf="errorState">{{errorMessage}}</div>
+            
+            <div class="row">
+                Email:
+                <input class="form-control" type="email" formControlName=userEmail>
+                <span class="form-text text-danger"
+                    *ngIf="(loginForm.get('userEmail')?.touched || formSubmitted) && (loginForm.get('userEmail')?.getError('required'))">
+                        Email is required
+                </span>
+                <span class="form-text text-danger"
+                    *ngIf="(loginForm.get('userEmail')?.touched) && (loginForm.get('userEmail')?.getError('pattern'))">
+                        Enter a valid email address
+                </span>
+            </div>
+            <div class="row">
+                Password:
+                <input class="form-control" type="password" formControlName=userPassword>
+                <span class="form-text text-danger"
+                    *ngIf="(loginForm.get('userPassword')?.touched || formSubmitted) && (loginForm.get('userPassword')?.getError('required'))">
+                        Password is required
+                </span> 
+            </div>
+            <div class="row">
+                <button class="btn btn-primary">Login</button>
+            </div>
+            <div class="row text-center">
+                <button class="btn btn-secondary" routerLink="/forgotPassword">Forgot Password</button>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <a class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+                        routerLink="/patientSignup">Patient Signup</a>
+                </div>
+                <div class="col text-center">
+                    <a class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+                        routerLink="/doctorSignup">Doctor Signup</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

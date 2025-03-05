@@ -1,0 +1,111 @@
+<div class="container w-100 mt-3 p-3 rounded mat-elevation-z24">
+  <br>
+  <br>
+  <div class="col">
+    <h2>Appointment History:</h2>
+    <div class="main">
+      <div class="container py-1">
+        <div class="row">
+          <form [formGroup]="historyForm" (ngSubmit)="onDateSearch()">
+            <div class="row">
+              <div class="col" style=" top:32%;left:42%">
+                <label class="mt-2 pt-1 ms-3">From:</label>
+                <input class="form-control m-1" type="date" id="fromDate" formControlName="fromDate">
+              </div>
+              <div class="col">
+                <label class="mt-2 pt-1 me-1">To:</label>
+                <input class="form-control m-1" type="date" id="toDate" formControlName="toDate"
+                  [min]="historyForm.get('fromDate')?.value">
+              </div>
+              <div class="col mt-2 ms-2">
+                <label for="familyname" class="form-control" class="form-label">Family Member</label>
+                <select class="form-control" id="familyname" #familyNameSelect (change)="onSubmit()"
+                  placeholder="Select Family Member">
+                  <option value="Select Family Member" disabled selected>Select Family Member</option>
+                  <option *ngFor="let name of familyname" [value]="name">{{name}}</option>
+                </select>
+              </div>
+              <div style="top: 23%;left: 75%; position: absolute;">
+                <button class="btn btn-danger" type="button" (click)="onResetDateSearch()">Reset</button>
+              </div>
+              <div style="top: 23%;left: 82%; position: absolute;">
+                <button class="btn btn-primary btn-block">Search</button>
+              </div>
+              
+            </div>
+          </form>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+        <div class="mat-elevation-z8 mt-1">
+          <table mat-table [dataSource]="dataSource" matSort class="table table-striped">
+
+            <ng-container matColumnDef="appointmentId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.appointmentId }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="doctorFirstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor First Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.doctorFirstName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="doctorLastName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor Last Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.doctorLastName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="patientFirstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient First Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.patientFirstName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="patientLastName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient Last Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.patientLastName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="memberFirstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Member First Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.memberFirstName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="memberLastName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Last Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.memberLastName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="appointmentSlot">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Slot</th>
+              <td mat-cell *matCellDef="let element">{{ element.appointmentSlot }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="appointmentDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</th>
+              <td mat-cell *matCellDef="let element">{{ element.appointmentDate | date:'yyyy-MM-dd' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="appointmentStatus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Status</th>
+              <td mat-cell *matCellDef="let element">{{ element.appointmentStatus }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="doctorComment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor Comment</th>
+              <td mat-cell *matCellDef="let element">{{ element.doctorComment }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="patientComment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient Comment</th>
+              <td mat-cell *matCellDef="let element">{{ element.patientComment }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>

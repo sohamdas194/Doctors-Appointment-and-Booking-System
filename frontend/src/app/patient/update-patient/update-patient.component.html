@@ -1,0 +1,296 @@
+ <main><div class="fullscreen" style="background-image: url();">
+
+  <div class="form-container">
+
+    <form [formGroup]="patientRegForm" (ngSubmit)="onSubmit()">
+      <p>{{patientMessage}}</p>
+       <div class="box">
+          <div class="photo">
+          <img style="width:470px; height:350px; margin-bottom:20px;"
+               src="https://as1.ftcdn.net/v2/jpg/03/13/77/82/1000_F_313778250_Y0o5can6MA490Nt7G6p03Zfu5fKmWCIv.jpg"
+               alt="profilephoto">
+          </div>
+          <div class="text">
+          <h1 align="center">Update Profile</h1>
+         </div>
+      </div>
+
+      <br><br>
+      <!--**********************************************-->
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" id="firstName" class="form-control disabled" name="firstName" readonly formControlName="firstname" ngModel="{{patientData?.firstName}}">
+          <div *ngIf="patientRegForm.get('firstname')?.touched && hasError('firstname','required')" class="text-danger">*First name is required.</div>
+          <div *ngIf="patientRegForm.get('firstname')?.touched && hasError('firstname','minlength')" class="text-danger">*First Name minimum 4 characters required.</div>
+        <div *ngIf="patientRegForm.get('firstName')?.touched && hasError('firstName', 'pattern')"
+             class="text-danger">
+          *Enter Valid Name</div>
+        </div>
+        <br>
+
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" id="lastName" class="form-control disabled" name="lastName"  readonly formControlName="lastname" ngModel="{{patientData?.lastName}}">
+          <div *ngIf="patientRegForm.get('lastname')?.touched && hasError('lastname','required')" class="text-danger">*Last name is required.</div>
+          <div *ngIf="patientRegForm.get('lastname')?.touched && hasError('lastname','minlength')" class="text-danger">*Last name minimum 4 characters required.</div>
+          <div *ngIf="patientRegForm.get('lastName')?.touched && hasError('lastName', 'pattern')"
+               class="text-danger">
+            *Enter Valid Name</div>
+        </div>
+      </div>
+
+      <br>
+      <!--**********************************************-->
+
+
+      <div class="row mb-3">
+        <div class="col sm">
+          <label for="gender">Gender </label>
+          <input formControlName="gender" class="dropdown disabled" id="gender" readonly  ngModel="{{patientData?.gender}}" />
+          <div *ngIf="hasError('gender', 'required')" class="text-danger">*Gender is required.</div>
+        </div>
+
+        <div class="col sm">
+          <label for="bloodGroup">Blood Group </label>
+          <input formControlName="bloodGroup" class="dropdown disabled" id="bloodGroup" readonly ngModel="{{patientData?.bloodGroup}}"/>
+          <div *ngIf="hasError('bloodGroup', 'required')" class="text-danger">*Blood group is required.</div>
+        </div>
+      </div>
+
+      <br>
+
+      <!-- ********************************************************-->
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="height" class="form-label">Height (cm) </label>
+          <input type="text" id="height" class="form-control" name="height" formControlName="height" ngModel="{{patientData?.height}}">
+          <div *ngIf="patientRegForm.get('height')?.touched && hasError('height','min')" class="text-danger">*Height must be gretarer than or equal to 0.</div>
+          <div *ngIf="patientRegForm.get('height')?.touched && hasError('height','max')" class="text-danger">*Height must be less than or equal to 300.</div>
+          <div *ngIf="patientRegForm.get('height')?.touched && hasError('height', 'pattern')" class="text-danger">*Height must contain only digits.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="weight" class="form-label">Weight (Kg)</label>
+          <input type="text" id="weight" class="form-control" name="weight" formControlName="weight" ngModel="{{patientData?.weight}}">
+          <div *ngIf="patientRegForm.get('weight')?.touched && hasError('weight','min')" class="text-danger">*Weight must be gretarer than or equal to 0.</div>
+          <div *ngIf="patientRegForm.get('weight')?.touched && hasError('weight','max')" class="text-danger">*Weight must be less than or equal to 300.</div>
+          <div *ngIf="patientRegForm.get('weight')?.touched && hasError('weight', 'pattern')" class="text-danger">*Weight must contain only digits.</div>
+        </div>
+      </div>
+
+      <!--**********************************************-->
+
+      <div class="mb-3">
+        <label for="contactNumber" class="form-label">Contact Number</label>
+        <input type="text" id="contactNumber" class="form-control" name="contactNumber" maxlength="10" formControlName="contactNumber" ngModel="{{patientData?.phone}}">
+        <div *ngIf="patientRegForm.get('contactNumber')?.touched && hasError('contactNumber', 'required')" class="text-danger">*Contact number is required.</div>
+        <div *ngIf="patientRegForm.get('contactNumber')?.touched && hasError('contactNumber', 'minlength')" class="text-danger">*Contact number must be exactly 10 digits.</div>
+        <div *ngIf="patientRegForm.get('contactNumber')?.touched && hasError('contactNumber', 'maxlength')" class="text-danger">*Contact number must be exactly 10 digits.</div>
+        <div *ngIf="patientRegForm.get('contactNumber')?.touched && hasError('contactNumber', 'pattern')" class="text-danger">*Contact number must contain only digits.</div>
+      </div>
+
+      <!--**********************************************-->
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="dob" class="form-label" style="color:black;">Date Of Birth</label>
+          <input type="date" id="dob" name="dob" class="dropdown disabled" readonly formControlName="dob" [max]="maxDate" ngModel="{{patientData?.dob}}">
+          <div *ngIf="patientRegForm.get('dob')?.touched && hasError('dob', 'required')" class="text-danger">*Emergency Contact number is required.</div>
+          <div *ngIf="patientRegForm.get('dob')?.errors?.['invalidAge']" class="form-error-message">*Minimum age required is 23 years.</div>
+        </div>
+
+        <!--**********************************************-->
+
+        <div class="col sm">
+          <label for="maritalstatus">Marital Status </label>
+          <select formControlName="maritalStatus" class="dropdown" id="maritalStatus" ngModel="{{patientData?.maritalStatus}}">
+            <option value="" disabled selected></option>
+            <option *ngFor="let group of MaritalStatus" [value]="group">{{ group }}</option>
+          </select>
+          <div *ngIf="hasError('maritalStatus', 'required')" class="text-danger">*Marital Status is required.</div>
+        </div>
+      </div>
+
+      <br>
+
+      <!-- **********************************************-->
+
+      <br>
+      <div class="address">
+        <h3 align="center">Address</h3>
+        <div class="mb-3">
+          <label for="street1" class="form-label">Street</label>
+          <input type="text" id="street1" class="form-control" name="street1" formControlName="street1" ngModel="{{patientData?.streetAddressLine1}}">
+          <div *ngIf="patientRegForm.get('street1')?.touched && hasError('street1', 'required')" class="text-danger">*Street is required.</div>
+          <div *ngIf="patientRegForm.get('street1')?.touched && hasError('street1', 'maxlength')" class="text-danger">*Street must not exceed 100 Characters.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="landmark" class="form-label">landmark</label>
+          <input type="text" id="landmark" class="form-control" name="landmark" formControlName="landmark" ngModel="{{patientData?.streetAddressLine2}}">
+          <div *ngIf="patientRegForm.get('landmark')?.touched && hasError('landmark', 'required')" class="text-danger">*Landmark is required.</div>
+          <div *ngIf="patientRegForm.get('landmark')?.touched && hasError('landmark', 'maxlength')" class="text-danger">*Landmark must not exceed 100 Characters.</div>
+          <div *ngIf="patientRegForm.get('landmark')?.touched && hasError('landmark', 'pattern')"
+               class="text-danger">
+            *Enter Valid Landmark</div>
+        </div>
+
+        <!-- **********************************************-->
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="city" class="form-label">City</label>
+            <input type="text" id="city" class="form-control" name="city" formControlName="city" ngModel="{{patientData?.city}}">
+            <div *ngIf="patientRegForm.get('city')?.touched && hasError('city', 'required')" class="text-danger">*City is required.</div>
+            <div *ngIf="patientRegForm.get('city')?.touched && hasError('city', 'maxlength')" class="text-danger">*City must not exceed 100 Characters.</div>
+            <div *ngIf="patientRegForm.get('city')?.touched && hasError('city', 'pattern')"
+                 class="text-danger">
+              *Enter Valid City</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="state" class="form-label">State</label>
+            <input type="text" id="state" class="form-control" name="state" formControlName="state" ngModel="{{patientData?.state}}">
+            <div *ngIf="patientRegForm.get('state')?.touched && hasError('state', 'required')" class="text-danger">*State is required.</div>
+            <div *ngIf="patientRegForm.get('state')?.touched && hasError('state', 'maxlength')" class="text-danger">*State must not exceed 100 Characters.</div>
+            <div *ngIf="patientRegForm.get('state')?.touched && hasError('state', 'pattern')"
+                 class="text-danger">
+              *Enter Valid State</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="pincode" class="form-label">PinCode</label>
+          <input type="text" id="pincode" class="form-control" name="pincode" maxlength="6" formControlName="pincode" ngModel="{{patientData?.pin}}">
+          <div *ngIf="patientRegForm.get('pincode')?.touched && hasError('pincode', 'required')" class="text-danger">*Pin code is required.</div>
+          <div *ngIf="patientRegForm.get('pincode')?.touched && hasError('pincode', 'minlength')" class="text-danger">*Pin code must be exactly 6 digits.</div>
+          <div *ngIf="patientRegForm.get('pincode')?.touched && hasError('pincode', 'maxlength')" class="text-danger">*Pin code must be exactly 6 digits.</div>
+          <div *ngIf="patientRegForm.get('pincode')?.touched && hasError('pincode', 'pattern')" class="text-danger">*Pin code must contain only digits.</div>
+        </div>
+      </div>
+
+      <br><br>
+
+      <!-- ************************************************ -->
+
+      <div class="address">
+        <h3 align="center">Emergency Contact</h3>
+        <br>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="emergencyFirstName" class="form-label">First Name</label>
+            <input type="text" id="emergencyFirstName" class="form-control" name="emergencyFirstName" formControlName="emergencyFirstName" ngModel="{{patientData?.emergencyFirstName}}">
+            <div *ngIf="patientRegForm.get('emergencyFirstName')?.touched && hasError('emergencyFirstName','minlength')" class="text-danger">*First Name minimum 4 characters required.</div>
+            <div *ngIf="patientRegForm.get('emergencyFirstName')?.touched && hasError('emergencyFirstName', 'pattern')"
+                 class="text-danger">
+              *Enter Valid Name</div>
+          </div>
+          <br>
+
+          <div class="col-md-6">
+            <label for="emergencyLastName" class="form-label">Last Name</label>
+            <input type="text" id="emergencyLastName" class="form-control" name="emergencyLastName" formControlName="emergencyLastName" ngModel="{{patientData?.emergencyLastName}}">
+            <div *ngIf="patientRegForm.get('emergencyLastName')?.touched && hasError('emergencyLastName','minlength')" class="text-danger">*Last name minimum 4 characters required.</div>
+            <div *ngIf="patientRegForm.get('emergencyLastName')?.touched && hasError('emergencyLastName', 'pattern')"
+                 class="text-danger">*Enter Valid Name</div>
+          </div>
+        </div>
+
+        <br><br>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="emergencyRelationship" class="form-label">Relationship</label>
+            <input type="text" id="emergencyRelationship" class="form-control" name="emergencyRelationship" formControlName="emergencyRelationship" ngModel="{{patientData?.emergencyRelationship}}">
+            <div *ngIf="patientRegForm.get('emergencyRelationship')?.touched && hasError('emergencyRelationship', 'maxlength')" class="text-danger">*Relationship must not exceed 50 Characters.</div>
+            <div *ngIf="patientRegForm.get('emergencyRelationship')?.touched && hasError('emergencyRelationship', 'pattern')"
+                 class="text-danger">*Enter Valid Relation</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="emergencyContact" class="form-label">Contact Number</label>
+            <input type="text" id="emergencyContact" class="form-control" name="emergencyContact" maxlength="10" formControlName="emergencyContact" ngModel="{{patientData?.emergencyContact}}">
+            <div *ngIf="patientRegForm.get('emergencyContact')?.touched && hasError('emergencyContact', 'minlength')" class="text-danger">*Emergency Contact number must be exactly 10 digits.</div>
+            <div *ngIf="patientRegForm.get('emergencyContact')?.touched && hasError('emergencyContact', 'maxlength')" class="text-danger">*Emergency Contact number must be exactly 10 digits.</div>
+            <div *ngIf="patientRegForm.get('emergencyContact')?.touched && hasError('emergencyContact', 'pattern')" class="text-danger">*Emergency Contact number must contain only digits</div>
+          </div>
+        </div>
+      </div>
+
+      <br><br>
+
+      <!-- *************************************************************** -->
+
+      <div class="address">
+        <h3 align="center">Insurance Information</h3>
+        <br>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="insuranceCompany" class="form-label">Insurance Company</label>
+            <input type="text" id="insuranceCompany" class="form-control" name="insuranceCompany" formControlName="insuranceCompany" ngModel="{{patientData?.insuranceCompany}}">
+            <div *ngIf="patientRegForm.get('insuranceCompany')?.touched && hasError('insuranceCompany', 'minlength')" class="text-danger">*Minimum 5 characters required.</div>
+            <div *ngIf="patientRegForm.get('insuranceCompany')?.touched && hasError('insuranceCompany', 'pattern')"
+                 class="text-danger">*Enter Valid Name</div>
+
+          </div>
+
+          <div class="col-md-6">
+            <label for="insuranceId" class="form-label">Insurance ID</label>
+            <input type="text" id="insuranceId" class="form-control" name="insuranceId" formControlName="insuranceId" ngModel="{{patientData?.insuranceId}}">
+            <div *ngIf="patientRegForm.get('insuranceId')?.touched && hasError('insuranceId', 'maxlength')" class="text-danger">*Insurance Id must not exceed 10 Characters.</div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="policyHolderName" class="form-label">Policy Holder's Name</label>
+            <input type="text" id="policyHolderName" class="form-control" name="policyHolderName" formControlName="policyHolderName" ngModel="{{patientData?.policyHolderName}}">
+            <div *ngIf="patientRegForm.get('policyHolderName')?.touched && hasError('policyHolderName', 'maxlength')" class="text-danger">*Name must not exceed 30 Characters.</div>
+            <div *ngIf="patientRegForm.get('policyHolderName')?.touched && hasError('policyHolderName', 'pattern')"
+                 class="text-danger">*Enter Valid Name</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="policyDate" class="form-label" style="color:black;">Policy Start Date</label>
+            <input type="date" id="policyDate" name="policyDate" class="dropdown" formControlName="policyDate" [max]="maxDate" ngModel="{{patientData?.policyDate}}">
+            <div *ngIf="patientRegForm.get('policyDate')?.errors?.['invalidAge']" class="form-error-message">*Minimum  2 Years.</div>
+          </div>
+        </div>
+      </div>
+
+      <br><br>
+
+      <!-- *********************************************************** -->
+
+      <div class="mb-3">
+        <label for="reasonForRegistration" class="form-label">Reason for Registration</label>
+        <input type="text" id="reasonForRegistration" class="form-control" name="reasonForRegistration" formControlName="reasonForRegistration" ngModel="{{patientData?. reasonForRegistration}}">
+        <div *ngIf="patientRegForm.get('reasonForRegistration')?.touched && hasError('reasonForRegistration','maxlength')" class="text-danger">*Maximum limit reached.</div>
+        <div *ngIf="patientRegForm.get('reasonForRegistration')?.touched && hasError('reasonForRegistration', 'pattern')"
+             class="text-danger">*Enter Valid Reason</div>
+      </div>
+
+      <!-- ************************************************ -->
+
+      <div class="mb-3">
+        <label for="additionalNotes" class="form-label">Additional Notes</label>
+        <input type="text" id="additionalNotes" class="form-control" name="additionalNotes" formControlName="additionalNotes" ngModel="{{patientData?.additionalNotes}}">
+        <div *ngIf="patientRegForm.get('additionalNotes')?.touched && hasError('additionalNotes','maxlength')" class="text-danger">*Maximum limit reached.</div>
+        <div *ngIf="patientRegForm.get('additionalNotes')?.touched && hasError('additionalNotes', 'pattern')"
+             class="text-danger">*Enter Valid Notes</div>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <button style="position:relative; left:40%;" type="submit" class="btn btn-success" >Update</button>
+
+    </form>
+  </div>
+</div>
+</main>

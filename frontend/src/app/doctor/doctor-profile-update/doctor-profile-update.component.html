@@ -1,0 +1,238 @@
+<span>
+<main>
+   
+  <div class="row justify-content-center fullscreen">
+        <mat-card class="col-md-6">
+    <mat-card-header class="d-flex justify-content-center">
+        <div >
+            <h1 class="text-center mb-0" >Update Profile</h1>
+            <span class="close" (click)="closeModal()">&times;</span>
+            </div>
+        </mat-card-header>
+     
+    <div class="container my-5 ">
+      <form [formGroup]="doctorUpdatePage" (ngSubmit)="onSubmit()" class="form-container bg-light p-4 rounded"
+        (ngModelChange)="checkFormValidity()">
+        <div class="form-group">
+          <label for="email" class="form-label">Email ID</label>
+          <input type="email" id="email" placeholder="email@address.com" class="form-control disabled-field" formControlName=email [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="doctorUpdatePage.get('email')?.touched" class="text-danger form-error">
+            *User cannot change the email once registered with the email
+          </div>
+        </div>
+        <br>
+  
+        <div class="row mb-3">
+          <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" id="firstName" class="form-control disabled-field" formControlName="firstName" [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)" >
+         
+            <div *ngIf="doctorUpdatePage.get('firstName')?.touched" class="text-danger form-error">*User cannot change the First Name.</div>
+           </div>
+
+           <div class="col-md-6"> 
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" id="lastName" class="form-control disabled-field" formControlName="lastName" [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div *ngIf="doctorUpdatePage.get('lastName')?.touched" class="text-danger form-error">*User cannot change the Last Name.</div>
+      </div>
+      </div>
+      
+      
+  
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="Gender" class="form-label" (paste)="onPaste($event)" (copy)="onCopy($event)">Gender</label>
+          <!-- <select class="form-control disabled-field" formControlName="gender" [disabled]="true" aria-readonly="true">
+            <option value="" disabled selected aria-readonly="true">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>  -->
+          <input type="text" id="gender" class="form-control disabled-field" formControlName="gender" [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)" >
+
+            <div *ngIf="doctorUpdatePage.get('gender')?.touched" class="text-danger form-error">*User cannot change the Gender <span class="text-danger">*</span></div>
+        </div>
+  
+  
+        <div class="col-md-6">
+          <label for="dateOfBirth" class="form-label">Date Of Birth </label>
+          <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control disabled-field" formControlName="dateOfBirth" [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="doctorUpdatePage.get('dateOfBirth')?.touched" class="text-danger form-error">*User cannot change the Date of Birth
+          </div>
+        </div>
+      </div>
+  
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="phoneNumber" class="form-label">Contact Number <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="1234567890" class="form-control"
+              formControlName="phoneNumber" pattern="[0-9]{10}" minlength="10" maxlength="10" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          </div>
+          <div
+            *ngIf="doctorUpdatePage.get('phoneNumber')?.invalid && (doctorUpdatePage.get('phoneNumber')?.dirty || doctorUpdatePage.get('phoneNumber')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="doctorUpdatePage.get('phoneNumber')?.errors?.['required']" class="form-error-message">*Contact
+              number is required.</div>
+            <div *ngIf="doctorUpdatePage.get('phoneNumber')?.errors?.['pattern']" class="form-error-message">*Contact
+              number must be a 10-digit number.</div>
+          </div>
+        </div>
+  
+        <div class="col-md-6">
+          <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+          <input type="text" id="country" class="form-control" formControlName="country" (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div
+            *ngIf="doctorUpdatePage.get('country')?.invalid && (doctorUpdatePage.get('country')?.dirty || doctorUpdatePage.get('country')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="doctorUpdatePage.get('country')?.errors?.['required']" class="form-error-message">*Country
+              is required.</div>
+            <div *ngIf="doctorUpdatePage.get('country')?.errors?.['minlength']" class="form-error-message">*Country
+              must be at least 3 characters long.</div>
+            <div *ngIf="doctorUpdatePage.get('country')?.errors?.['invalidName']" class="form-error-message">*space
+              is not allowed after word.</div>
+          </div>
+        </div>
+      </div>
+  
+  
+        <div class="box">
+          <div class="form-group">
+            <label for="address1" class="form-label">Address1 <span class="text-danger">*</span></label>
+            <textarea id="address1" class="form-control" formControlName="address1" (paste)="onPaste($event)" (copy)="onCopy($event)"></textarea>
+            <div
+              *ngIf="doctorUpdatePage.get('address1')?.invalid && (doctorUpdatePage.get('address1')?.dirty || doctorUpdatePage.get('address1')?.touched)"
+              class="text-danger form-error">
+              <div *ngIf="doctorUpdatePage.get('address1')?.errors?.['required']" class="form-error-message">
+                *Address 1 is required.</div>
+              <div *ngIf="doctorUpdatePage.get('address1')?.errors?.['minlength']" class="form-error-message">
+                *Address 1 must be at least 3 characters long.</div>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="address2" class="form-label">Address2 </label>
+            <textarea id="address2" class="form-control" formControlName="address2"></textarea>
+          </div>
+          <br>
+          <div class="form-group row">
+            <div class="col-md-4">
+              <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+              <input type="text" id="state" class="form-control" formControlName="state" placeholder="State" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <div *ngIf="doctorUpdatePage.get('state')?.invalid && (doctorUpdatePage.get('state')?.dirty || doctorUpdatePage.get('state')?.touched)"
+                class="text-danger form-error">
+                <div *ngIf="doctorUpdatePage.get('state')?.errors?.['required']" class="form-error-message">
+                  *State is required.
+                </div>
+                <div *ngIf="doctorUpdatePage.get('state')?.errors?.['invalidName']" class="form-error-message">
+                  *State must contain only alphabetic characters and spaces.
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="col-md-4">
+              <label for="city" class="form-label">City <span class="text-danger">*</span></label>
+              <input type="text" id="city" class="form-control" formControlName="city" placeholder="City" (paste)="onPaste($event)" (copy)="onCopy($event)" >
+              <div *ngIf="doctorUpdatePage.get('city')?.invalid && (doctorUpdatePage.get('city')?.dirty || doctorUpdatePage.get('city')?.touched)"
+                class="text-danger form-error">
+                <div *ngIf="doctorUpdatePage.get('city')?.errors?.['required']" class="form-error-message">
+                  *City is required.
+                </div>
+                <div *ngIf="doctorUpdatePage.get('city')?.errors?.['invalidName']" class="form-error-message">
+                  *City must contain only alphabetic characters and spaces.
+                </div>
+              </div>
+            </div>
+<br>
+            <div class="col-md-4">
+              <label for="pinCode" class="form-label">Pin Code <span class="text-danger">*</span></label>
+              <input type="text" id="pinCode" class="form-control" formControlName="pinCode" placeholder="Pin Code" pattern="[0-9]{6}" minlength="6" maxlength="6" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <div *ngIf="doctorUpdatePage.get('pinCode')?.invalid && (doctorUpdatePage.get('pinCode')?.dirty || doctorUpdatePage.get('pinCode')?.touched)"
+                class="text-danger form-error">
+                <div *ngIf="doctorUpdatePage.get('pinCode')?.errors?.['required']" class="form-error-message">
+                  *Pin Code is required.
+                </div>
+                <div *ngIf="doctorUpdatePage.get('pinCode')?.errors?.['minlength'] || doctorUpdatePage.get('pinCode')?.errors?.['maxlength']"
+                  class="form-error-message">
+                  *Pin Code must be 6 characters long.
+                </div>
+                <div *ngIf="doctorUpdatePage.get('pinCode')?.errors?.['pattern']" class="form-error-message">
+                  *Pin Code must be a valid 6-digit number.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+          <label for="consultingFrom" class="form-label">Consulting From</label>
+          <input type="date" id="consultingFrom" name="consultingFrom" class="form-control disabled-field" formControlName="consultingFrom" [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)">
+          <div *ngIf="doctorUpdatePage.get('consultingFrom')?.touched" class="text-danger form-error">
+           *User cannot change the Consulting From.
+          </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="BloodGroup" class="form-label">Blood Group</label>
+            <!-- <select class="form-control disabled-field" id="BloodGroup" formControlName="bloodGroup"  [disabled]="true" aria-readonly="true" (paste)="onPaste($event)" (copy)="onCopy($event)">
+              <option value="" disabled selected>Select Blood Group</option> 
+               <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option> 
+           </select> -->
+           
+            <input type="text" id="bloodGroup" class="form-control disabled-field" formControlName="bloodGroup" [disabled]="true" readonly (paste)="onPaste($event)" (copy)="onCopy($event)" >
+           
+              <div *ngIf="doctorUpdatePage.get('bloodGroup')?.touched" class="text-danger form-error">*User cannot change the Blood Group.</div>
+             </div>
+          </div>
+          
+
+        <div class="form-group">
+          <label for="Specialization" class="form-control"
+            class="form-label">Specialization<span class="text-danger">*</span></label>
+          <select class="form-control" id="Specialization" formControlName="specialization" (paste)="onPaste($event)" (copy)="onCopy($event)">
+            <option value="" disabled selected>Select Specialization</option>
+            <option *ngFor="let specialization of specializations" [value]="specialization">{{specialization}}</option>
+          </select>
+
+          <div
+            *ngIf="doctorUpdatePage.get('specialization')?.invalid && (doctorUpdatePage.get('specialization')?.dirty || doctorUpdatePage.get('specialization')?.touched)"
+            class="text-danger form-error">
+            <div *ngIf="doctorUpdatePage.get('specialization')?.errors?.['required']" class="form-error-message">
+              *Specialization is required.</div>
+          </div>
+        </div>
+  
+   <br><br>
+   <div class="form-actions">
+
+    <button type="sub" class="btn btn-danger" id="reset-btn"    (click)="onReset()">Reset</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary" [disabled]="doctorUpdatePage.invalid" >
+          Update
+        </button>    
+       
+      </div>
+      </form>
+    
+    </div>
+   
+</mat-card>
+    </div>
+
+  </main>
+</span>
+<footer class="footer-bg">
+  <div class="footer-theme container d-flex justify-content-center align-items-center h-100">
+    <h4 class="text-muted mb-0">@we and you for Tomorrow</h4>
+  </div>
+</footer>
+  

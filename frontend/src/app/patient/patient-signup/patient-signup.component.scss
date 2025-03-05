@@ -1,0 +1,88 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+
+.fullscreen
+{
+//  height: 420vh; /* Full viewport height */
+ padding-top: 35px;
+ display: flex;
+ flex-direction: column;
+ justify-content:center;
+ align-items: center;
+ background-color:#b5e2e3;
+ }
+
+
+
+.form-container {
+  max-width: 600px;
+  overflow-y:auto;
+  max-height:85vh;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 15px  black;
+  background-color:#F2F2F2;
+  margin-bottom:10px;
+ }
+
+
+
+
+.address{
+padding: 1.5rem;
+ border: 0.5px solid black;
+ border-radius: 0.5rem;
+ background-color:#F7F7F7;
+}
+
+
+.dropdown{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+#maritalStatus{
+    padding-bottom: 5px;
+    margin-top: 8px;
+}
+
+
+ .text-danger{
+  font-size: 12px;
+}
+
+
+.btn:disabled{
+  background-color:green;
+   opacity: 0.6;
+  }
+
+
+// :host {
+//    display: block;
+//    background-color:#b5e2e3;
+//    background-size: cover;
+//    display:block;
+//   height: 93vh;
+//    overflow: auto;
+//    }
+
+//  main{
+//  //   min-height: calc(100vh - 140px);
+//   }
+
+
